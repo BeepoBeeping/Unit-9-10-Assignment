@@ -15,6 +15,11 @@ public class ButtonScript : MonoBehaviour
         
     }
 
+    public void EnterLevel()
+    {
+        SceneManager.LoadScene("Level1");
+    }
+
     public void ExitToMenu()
     {
         SceneManager.LoadScene("MainMenu");
