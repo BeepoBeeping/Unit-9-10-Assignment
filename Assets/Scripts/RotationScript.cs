@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -22,5 +23,15 @@ public class RotationScript : MonoBehaviour
     {
 
         gameObject.transform.rotation = gyro.attitude;
+
+        if (gameObject.transform.rotation.eulerAngles.y >= 0 || gameObject.transform.rotation.eulerAngles.y <= 0)
+        {
+            gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, 0, gameObject.transform.eulerAngles.z);
+        }
+
+        if (gameObject.transform.rotation.eulerAngles.x >= 0 || gameObject.transform.rotation.eulerAngles.x <= 0)
+        {
+            gameObject.transform.eulerAngles = new Vector3(0, gameObject.transform.eulerAngles.y, gameObject.transform.eulerAngles.z);
+        }
     }
 }
