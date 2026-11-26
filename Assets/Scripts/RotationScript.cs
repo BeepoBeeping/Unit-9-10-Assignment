@@ -5,24 +5,26 @@ using UnityEngine;
 public class RotationScript : MonoBehaviour
 {
     Gyroscope gyro;
+    private Quaternion baseRotation;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        gyro = Input.gyro;
-        if (!gyro.enabled)
-        {
-            gyro.enabled = true;
-        }
-
-
+        Input.gyro.enabled = true;
+        baseRotation = Quaternion.Euler(90f, 0f, 0f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!Input.gyro.enabled) return;
 
-        gameObject.transform.rotation = gyro.attitude;
+        Quaternion raw = Input.gyro.attitude;
+        Quaternion converted = new Quaternion(raw.x, raw.y, -raw.z, -raw.w);
+
+        transform.localRotation = baseRotation * converted;
+
+        gameObject.transform.rotation = converted;
 
         if (gameObject.transform.rotation.eulerAngles.y >= 0 || gameObject.transform.rotation.eulerAngles.y <= 0)
         {
